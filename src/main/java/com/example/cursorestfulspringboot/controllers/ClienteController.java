@@ -80,9 +80,11 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable int id, @RequestBody Cliente cliente){
+    public ResponseEntity<Cliente> atualizar(@PathVariable int id, @RequestBody ClienteDTO clienteDTO){
     
         if(repository.getClienteById(id) != null){
+            
+            Cliente cliente = servico.fromDTO(clienteDTO);
             cliente.setId(id);
             cliente = repository.update(cliente);
             return ResponseEntity.ok(cliente);
