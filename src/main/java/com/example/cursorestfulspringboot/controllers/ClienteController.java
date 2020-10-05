@@ -2,8 +2,14 @@ package com.example.cursorestfulspringboot.controllers;
 
 import java.net.URI;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.example.cursorestfulspringboot.dto.ClienteDTO;
 import com.example.cursorestfulspringboot.model.Cliente;
 import com.example.cursorestfulspringboot.repository.ClienteRepository;
+import com.example.cursorestfulspringboot.service.ClienteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/clientes")
@@ -21,6 +29,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private ClienteService servico;
 
     @GetMapping
     public List<Cliente> getClientes() {
@@ -41,12 +52,19 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody Cliente cliente){
-        Cliente cli = repository.salvar(cliente);
-        URI uri = URI.create("http://localhost:8080/clientes/" + cli.getId());
-        return ResponseEntity.created(uri).build();
+    public ResponseEntity<Void> salvar(@RequestBody ClienteDTO novoCliente, 
+                                       HttpServletRequest request,
+                                       UriComponentsBuilder builder
+                                       ) {
+      
+        Cliente cli = repository.salvar(servico.fromDTO(novoCliente));
+      
+        UriComponents uriComponents = builder.path(request.getRequestURI()+"/"+cli.getId()).build();
+        
+        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable int id){
         Cliente cli = repository.getClienteById(id);
