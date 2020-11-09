@@ -2,12 +2,20 @@ package com.example.cursorestfulspringboot.model;
 
 import java.util.ArrayList;
 
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 public class Cliente {
+
     private int id;
+
+  
     private String nome;
+    @Size(min = 4, max = 200, message = "Endereco do cliente deve ter em 4 e 200 caracteres")
     private String endereco;
+
     private double saldo;
 
     @JsonIgnore
