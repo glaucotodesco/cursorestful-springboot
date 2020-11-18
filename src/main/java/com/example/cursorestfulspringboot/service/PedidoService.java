@@ -38,7 +38,7 @@ public class PedidoService {
         //Se nao existir lanca o 404 e finaliza!
         Cliente cliente = clienteService.getClienteById(idCliente);
 
-        pedido.setDataPedido(LocalDateTime.now());
+//        pedido.setDataPedido(LocalDateTime.now());/
         pedido.setCliente(cliente);
         cliente.addPedido(pedido);
 
@@ -50,6 +50,7 @@ public class PedidoService {
         PedidoDTO dto = new PedidoDTO();
         dto.setDataPedido(pedido.getDataPedido());
         dto.setDescricao(pedido.getDescricao());
+        dto.setDataEntrega(pedido.getDataEntrega());
         dto.setItens(pedido.getItens());
         dto.setNumero(pedido.getNumero());
         dto.setTotalPedido(pedido.totalPedido());

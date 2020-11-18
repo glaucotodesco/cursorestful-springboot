@@ -1,5 +1,6 @@
 package com.example.cursorestfulspringboot.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -10,10 +11,13 @@ public class PedidoDTO {
     private long numero;
     private String descricao;
     private LocalDateTime dataPedido;
+    private LocalDate dataEntrega;
     private boolean pedidoFechado;
     private ArrayList<ItemPedido> itens = new ArrayList<ItemPedido>();
     private double totalPedido;
 
+
+    
     public long getNumero() {
         return numero;
     }
@@ -60,6 +64,14 @@ public class PedidoDTO {
 
     public void setTotalPedido(double totalPedido) {
         this.totalPedido = totalPedido;
+    }
+
+    public LocalDate getDataEntrega() {
+        return dataEntrega;
+    }
+
+    public void setDataEntrega(LocalDate dataEntrega) {
+        this.dataEntrega = dataEntrega;
     }
 
     
